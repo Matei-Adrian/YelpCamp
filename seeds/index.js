@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const roCities = require('./ro.json');
 const { descriptors, places } = require('./seedHelper');
 const Campground = require('../models/campground');
+const Review = require('../models/review');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     useNewUrlParser: true,
@@ -22,6 +23,7 @@ const name = (arr) => {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
+    await Review.deleteMany({});
     for (let i = 0; i < 50; i++) {
         const randomRo = Math.floor(Math.random() * 270);
         const price = Math.floor(Math.random() * 30) + 20;
@@ -29,9 +31,18 @@ const seedDB = async () => {
             author: '609bff1b9713bd2368ee32ff',
             location: `${roCities[randomRo].city}, ${roCities[randomRo].country}`,
             title: `${name(descriptors)} ${name(places)}`,
-            image: 'https://source.unsplash.com/collection/1114848',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, repellat doloribus error sint natus ut, quasi qui officia iure corporis animi voluptatibus nisi nulla, amet voluptatem commodi! Nisi, corporis fugiat?',
-            price
+            price,
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621708165/YelpCamp/zwahz9paf5xtcm2qh2n4.jpg',
+                    filename: 'YelpCamp/zwahz9paf5xtcm2qh2n4'
+                },
+                {
+                    url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621708167/YelpCamp/reutrwwraiy5rxckm37y.jpg',
+                    filename: 'YelpCamp/reutrwwraiy5rxckm37y'
+                }
+            ]
         })
         await camp.save();
     }
