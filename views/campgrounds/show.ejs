@@ -55,6 +55,7 @@
             </div>
         </div>
         <div class="col-6">
+            <div id="map"></div>
             <% if(signedInUser){ %>
                 <h2>Leave a Review</h2>
                 <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" novalidate
@@ -87,27 +88,35 @@
                     <button class="btn btn-secondary">Send Review</button>
                 </form>
                 <% } %>
-                    <h2>Reviews</h2>
-                    <% for(let review of campground.reviews){ %>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= review.author.username %>
-                                </h5>
-                                <p class="starability-result" data-rating="<%= review.rating %>">
-                                    Rated: <%= review.rating %> stars
-                                </p>
-                                <p class="card-text">Review: <%= review.body %>
-                                </p>
-                                <form
-                                    action="/campgrounds/<%= campground._id %>/reviews/<%= review._id%>?_method=DELETE"
-                                    method="POST">
-                                    <% if(signedInUser && review.author.equals(signedInUser._id)){ %>
-                                        <button class="btn btn-sm btn-danger">Delete Review</button>
-                                        <% } %>
-                                </form>
-                            </div>
-                        </div>
+                    <%if(campground.reviews.length) {%>
+                        <h2>Reviews</h2>
                         <% } %>
+                            <% for(let review of campground.reviews){ %>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= review.author.username %>
+                                        </h5>
+                                        <p class="starability-result" data-rating="<%= review.rating %>">
+                                            Rated: <%= review.rating %> stars
+                                        </p>
+                                        <p class="card-text">Review: <%= review.body %>
+                                        </p>
+                                        <form
+                                            action="/campgrounds/<%= campground._id %>/reviews/<%= review._id%>?_method=DELETE"
+                                            method="POST">
+                                            <% if(signedInUser && review.author.equals(signedInUser._id)){ %>
+                                                <button class="btn btn-sm btn-danger">Delete Review</button>
+                                                <% } %>
+                                        </form>
+                                    </div>
+                                </div>
+                                <% } %>
         </div>
     </div>
+
+    <script>
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const campground = <%- JSON.stringify(campground) %>
+    </script>
+    <script src="/javascripts/showPageMap.js"></script>

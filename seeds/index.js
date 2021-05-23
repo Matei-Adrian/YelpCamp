@@ -24,7 +24,7 @@ const name = (arr) => {
 const seedDB = async () => {
     await Campground.deleteMany({});
     await Review.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 300; i++) {
         const randomRo = Math.floor(Math.random() * 270);
         const price = Math.floor(Math.random() * 30) + 20;
         const camp = new Campground({
@@ -35,14 +35,21 @@ const seedDB = async () => {
             price,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621708165/YelpCamp/zwahz9paf5xtcm2qh2n4.jpg',
+                    url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621769630/YelpCamp/k6jnqpevsexljgvgwz7a.jpg',
                     filename: 'YelpCamp/zwahz9paf5xtcm2qh2n4'
                 },
                 {
-                    url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621708167/YelpCamp/reutrwwraiy5rxckm37y.jpg',
+                    url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621765584/YelpCamp/rabcpgchy88d5ymzrp4a.jpg',
                     filename: 'YelpCamp/reutrwwraiy5rxckm37y'
                 }
-            ]
+            ],
+            geometry: {
+                type: 'Point',
+                coordinates: [
+                    roCities[randomRo].lng,
+                    roCities[randomRo].lat
+                ]
+            }
         })
         await camp.save();
     }
