@@ -1,8 +1,8 @@
 <% layout('layouts/boilerplate') %>
     <link rel="stylesheet" href="/stylesheets/stars.css">
 
-    <div class="row">
-        <div class="col-6">
+    <div id="showDiv" class="row">
+        <div id="showDiv1" class="col-6">
             <div class="card mb-3">
                 <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -54,7 +54,7 @@
                         </div>
             </div>
         </div>
-        <div class="col-6">
+        <div id="showDiv2" class="col-6">
             <div id="map"></div>
             <% if(signedInUser){ %>
                 <h2>Leave a Review</h2>

@@ -22,11 +22,17 @@ module.exports.createCampground = async (req, res) => {
     const addCampground = new Campground(req.body.campground);
     addCampground.geometry = geoData.body.features[0].geometry;
     addCampground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    if (addCampground.images.length === 0) {
+        addCampground.images.push({
+            url: 'https://res.cloudinary.com/yelp-camp2/image/upload/v1621769630/YelpCamp/k6jnqpevsexljgvgwz7a.jpg',
+            filename: 'YelpCamp/zwahz9paf5xtcm2qh2n4'
+        });
+    }
     addCampground.author = req.user._id;
     await addCampground.save();
     console.log(addCampground)
     req.flash('success', 'Successfully made a new campgroun!');
-    res.redirect(`/campgrounds/${addCampground._id}`);
+    res.redirect(`/campgrounds/${addCampground._id}`);     
 };
 
 module.exports.showCampground = async (req, res) => {
@@ -42,7 +48,6 @@ module.exports.showCampground = async (req, res) => {
         return res.redirect('/campgrounds');
     }
     res.render('campgrounds/show.ejs', { campground });
-
 };
 
 module.exports.renderEditForm = async (req, res) => {
@@ -77,7 +82,7 @@ module.exports.updateCampground = async (req, res) => {
     res.redirect(`/campgrounds/${updateCampground._id}`);
 };
 
-module.exports.delelteCampground = async (req, res) => {
+module.exports.deleteCampground = async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted campground!');
