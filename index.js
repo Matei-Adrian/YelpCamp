@@ -98,8 +98,9 @@ const connectSrcUrls = [
     "https://a.tiles.mapbox.com/",
     "https://b.tiles.mapbox.com/",
     "https://events.mapbox.com/",
+    "https://ka-f.fontawesome.com/",
 ];
-const fontSrcUrls = [];
+const fontSrcUrls = ["https://ka-f.fontawesome.com/"];
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -141,6 +142,10 @@ app.use('', userRouter);
 
 app.get('/', (req, res) => {
     res.render('home.ejs');
+});
+
+app.post('/campgrounds/search',(req,res)=>{
+
 });
 
 app.all('*', (req, res, next) => {
