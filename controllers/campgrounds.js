@@ -5,9 +5,25 @@ const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 const { cloudinary } = require('../cloudinary');
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 module.exports.index = async (req, res) => {
-    const campgrounds = await Campground.find({});
-    res.render('campgrounds/index.ejs', { campgrounds });
+    const { search } = req.query;
+    if(!search){
+        const campgrounds = await Campground.find({});
+        const noMatch = 0;
+        res.render('campgrounds/index.ejs', { campgrounds, noMatch });
+    } else {
+        const regex = new RegExp(escapeRegex(search), 'gi');
+        const campgrounds = await Campground.find({ title : regex});
+        let noMatch = 0;
+        if(campgrounds.length < 1) {
+            noMatch = 1;
+        }
+        res.render('campgrounds/index.ejs', { campgrounds, noMatch });
+    }
 };
 
 module.exports.renderNewForm = (req, res) => {
