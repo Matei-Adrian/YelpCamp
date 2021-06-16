@@ -14,7 +14,7 @@ module.exports.index = async (req, res) => {
     if(!search){
         const campgrounds = await Campground.find({});
         const noMatch = 0;
-        res.render('campgrounds/index.ejs', { campgrounds, noMatch });
+        res.render('campgrounds/index.ejs', { campgrounds, noMatch, search });
     } else {
         const regex = new RegExp(escapeRegex(search), 'gi');
         const campgrounds = await Campground.find({ title : regex});
@@ -22,8 +22,9 @@ module.exports.index = async (req, res) => {
         if(campgrounds.length < 1) {
             noMatch = 1;
         }
-        res.render('campgrounds/index.ejs', { campgrounds, noMatch });
+        res.render('campgrounds/index.ejs', { campgrounds, noMatch, search });
     }
+    console.log(search)
 };
 
 module.exports.renderNewForm = (req, res) => {
