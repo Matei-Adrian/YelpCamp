@@ -24,7 +24,6 @@ module.exports.index = async (req, res) => {
         }
         res.render('campgrounds/index.ejs', { campgrounds, noMatch, search });
     }
-    console.log(search)
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -47,8 +46,7 @@ module.exports.createCampground = async (req, res) => {
     }
     addCampground.author = req.user._id;
     await addCampground.save();
-    console.log(addCampground)
-    req.flash('success', 'Successfully made a new campgroun!');
+    req.flash('success', 'Successfully made a new campground!');
     res.redirect(`/campgrounds/${addCampground._id}`);     
 };
 

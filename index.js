@@ -144,10 +144,6 @@ app.get('/', (req, res) => {
     res.render('home.ejs');
 });
 
-app.post('/campgrounds/search',(req,res)=>{
-
-});
-
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404));
 });
