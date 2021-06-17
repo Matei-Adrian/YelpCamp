@@ -15,7 +15,7 @@
     <% if(noMatch === 1){ %> 
         <p class="text-black-50 text-center mb-3 fs-2">No campground found, please try again.</p>
     <% }else{ %>
-    <% if(campgrounds){ %> 
+    <% if(campgrounds.length > 0){ %> 
         <h1>All Campgrounds</h1>
     <% }else{ %> 
         <p class="text-black-50 text-center mb-3 fs-2">:( We have no information about any campground at the moment.</p>
